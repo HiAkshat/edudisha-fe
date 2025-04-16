@@ -1,11 +1,14 @@
 import './App.css'
 import { Button } from '@/components/ui/button'
+import ThemeToggle from '@/components/atoms/ThemeToggle'
+import BaseLayout from './layout/BaseLayout'
+
 function App() {
   return (
-    <>
-      <div className='bg-red-500'>Hello</div>
-      <Button>Click me</Button>
-    </>
+    <BaseLayout> 
+      <ThemeToggle />
+      Hey
+    </BaseLayout>
   )
 }
 
