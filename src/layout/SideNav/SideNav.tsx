@@ -1,5 +1,4 @@
 import FileIcon from "@/components/atoms/icons/FileIcon";
-
 import {
   Sidebar,
   SidebarMenuItem,
@@ -29,7 +28,7 @@ export default function SideNav({
   const { appliedTheme } = useTheme();
 
   return (
-    <div>
+    <div className="">
       <Sidebar
         collapsible="icon"
         onMouseEnter={() => setIsSidebarHovered(true)}

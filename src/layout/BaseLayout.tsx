@@ -37,13 +37,15 @@ const BaseLayout = ({ children }: PropsWithChildren): React.ReactElement => {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <SidebarProvider defaultOpen={false} open={isSidebarHovered}>
-        <SidebarTrigger />
-        <SideNav items={items} setIsSidebarHovered={setIsSidebarHovered} />
-        <FileIcon />
-
-        {children}
-      </SidebarProvider>
+      <div className="bg-[#25c6a6b3]">
+        <SidebarProvider defaultOpen={false} open={isSidebarHovered}>
+          <SidebarTrigger />
+          <SideNav items={items} setIsSidebarHovered={setIsSidebarHovered} />
+          <div className="w-full m-2 ml-[-20px] bg-background rounded-md p-2">
+            {children}
+          </div>
+        </SidebarProvider>
+      </div>
     </ThemeProvider>
   );
 };
