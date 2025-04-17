@@ -1,10 +1,11 @@
-import { Outlet } from "react-router";
+import ExampleTable from "@/components/atoms/table/example-data";
+import ThemeToggle from "@/components/atoms/ThemeToggle";
 
 const Attendance = () => {
   return (
     <div>
-      <Outlet />
-      <div>Attendance</div>
+      <ThemeToggle/>
+      <ExampleTable />
     </div>
   );
 };

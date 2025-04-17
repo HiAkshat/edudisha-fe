@@ -23,12 +23,25 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
 
 // Types
 import { DataTableProps, SortState, SortDirection } from "./types";
 
 // Icons
-import { ArrowUpDown, ArrowUp, ChevronDown } from "lucide-react";
+import {
+  ArrowUpDown,
+  ArrowUp,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 // React
 import React from "react";
@@ -87,9 +100,9 @@ export default function DataTable<TData, TValue>({
   };
 
   return (
-    <div className="w-full h-min border rounded-md p-2">
+    <div className="w-full h-min border rounded-md flex flex-col gap-2 p-2">
       <div className="flex flex-end">
-      <DropdownMenu>
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns
@@ -99,9 +112,7 @@ export default function DataTable<TData, TValue>({
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
+              .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
@@ -114,7 +125,7 @@ export default function DataTable<TData, TValue>({
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
+                );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -181,23 +192,95 @@ export default function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+
       <div className="flex items-center justify-end gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+        <Pagination className="justify-end">
+          <PaginationContent>
+            <PaginationItem>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <ChevronLeft className="h-4 w-4 mt-0.5" />
+                Previous
+              </Button>
+            </PaginationItem>
+
+            {/* First page */}
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => table.setPageIndex(0)}
+                isActive={table.getState().pagination.pageIndex === 0}
+              >
+                1
+              </PaginationLink>
+            </PaginationItem>
+
+            {/* Show ellipsis if current page is far from start */}
+            {table.getState().pagination.pageIndex > 2 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            {/* Show pages around current page */}
+            {Array.from({ length: 5 }, (_, i) => {
+              const pageIndex = table.getState().pagination.pageIndex - 2 + i;
+              if (pageIndex > 0 && pageIndex < table.getPageCount() - 1) {
+                return (
+                  <PaginationItem key={pageIndex}>
+                    <PaginationLink
+                      onClick={() => table.setPageIndex(pageIndex)}
+                      isActive={
+                        table.getState().pagination.pageIndex === pageIndex
+                      }
+                    >
+                      {pageIndex + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              }
+              return null;
+            })}
+
+            {/* Show ellipsis if current page is far from end */}
+            {table.getState().pagination.pageIndex <
+              table.getPageCount() - 3 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            {/* Last page */}
+            {table.getPageCount() > 1 && (
+              <PaginationItem>
+                <PaginationLink
+                  onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                  isActive={
+                    table.getState().pagination.pageIndex ===
+                    table.getPageCount() - 1
+                  }
+                >
+                  {table.getPageCount()}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                Next
+                <ChevronRight className="h-4 w-4 mt-0.5" />
+              </Button>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );

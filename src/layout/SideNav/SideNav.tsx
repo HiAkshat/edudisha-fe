@@ -1,4 +1,3 @@
-import FileIcon from "@/components/atoms/icons/FileIcon";
 import {
   Sidebar,
   SidebarMenuItem,
@@ -43,20 +42,13 @@ export default function SideNav({
                 {items.map((item) => (
                   <Collapsible
                     defaultOpen={false}
-                    className="group/collapsible"
+                    className="group/collapsible "
                   >
                     <SidebarMenuItem key={item.title}>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton asChild>
                           <a href={item.url}>
-                            {/* <item.icon /> */}
-                            <FileIcon
-                              width={20}
-                              height={20}
-                              fillPath={
-                                appliedTheme === "dark" ? "white" : "black"
-                              }
-                            />
+                            <item.icon />
                             <div className="flex justify-between w-full">
                               <span>{item.title}</span>
                               <ChevronDown className={`ml-2 h-4 w-4`} />
@@ -64,7 +56,7 @@ export default function SideNav({
                           </a>
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
-                      <CollapsibleContent>
+                      <CollapsibleContent className="text-popover-foreground outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2">
                         <SidebarMenuSub>
                           <SidebarMenuSubItem>
                             <SidebarMenuSubButton>

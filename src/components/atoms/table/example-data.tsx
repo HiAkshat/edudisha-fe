@@ -73,7 +73,7 @@ export default function ExampleTable() {
       <DataTable
         columns={columns}
         data={users}
-        rowCount={30} // This would be the total count from your API
+        rowCount={50} // This would be the total count from your API
         pageIndex={pagination.pageIndex}
         pageSize={pagination.pageSize}
         onPaginationChange={handlePaginationChange}

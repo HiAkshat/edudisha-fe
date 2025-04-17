@@ -2,33 +2,35 @@ import { ThemeProvider } from "@/components/theme-provider";
 import SideNav from "./SideNav/SideNav";
 import React, { PropsWithChildren } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import FileIcon from "@/components/atoms/icons/FileIcon";
+import { CalendarIcon, SearchIcon, SettingsIcon } from "lucide-react";
+import { InboxIcon } from "lucide-react";
+import { HomeIcon } from "lucide-react";
 
 const items = [
   {
     title: "Home",
     url: "#",
-    // icon: Home,
+    icon: HomeIcon,
   },
   {
     title: "Inbox",
     url: "#",
-    // icon: Inbox,
+    icon: InboxIcon,
   },
   {
     title: "Calendar",
     url: "#",
-    // icon: Calendar,
+    icon: CalendarIcon,
   },
   {
     title: "Search",
     url: "#",
-    // icon: Search,
+    icon: SearchIcon,
   },
   {
     title: "Settings",
     url: "#",
-    // icon: Settings,
+    icon: SettingsIcon,
   },
 ]
 
@@ -37,7 +39,7 @@ const BaseLayout = ({ children }: PropsWithChildren): React.ReactElement => {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="bg-[#25c6a6b3]">
+      <div className="bg-[var(--color-primary-200)] dark:bg-[var(--color-primary-900)]">
         <SidebarProvider defaultOpen={false} open={isSidebarHovered}>
           <SidebarTrigger />
           <SideNav items={items} setIsSidebarHovered={setIsSidebarHovered} />
