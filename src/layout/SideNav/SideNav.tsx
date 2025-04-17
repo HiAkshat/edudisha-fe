@@ -11,7 +11,6 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { useTheme } from "@/components/theme-provider";
 import {
   Collapsible,
   CollapsibleContent,
@@ -25,18 +24,18 @@ export default function SideNav({
   items: any[];
   setIsSidebarHovered: (isHovered: boolean) => void;
 }) {
-  const { appliedTheme } = useTheme();
 
   return (
-    <div className="">
+    <div className="font-['Balsamiq_Sans',serif]">
       <Sidebar
+        className="py-2 ml-2 border-none"
         collapsible="icon"
         onMouseEnter={() => setIsSidebarHovered(true)}
         onMouseLeave={() => setIsSidebarHovered(false)}
       >
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupLabel>Edudisha Demo</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (

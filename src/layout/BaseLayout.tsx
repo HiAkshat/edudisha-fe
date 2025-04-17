@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { CalendarIcon, SearchIcon, SettingsIcon } from "lucide-react";
 import { InboxIcon } from "lucide-react";
 import { HomeIcon } from "lucide-react";
+import Navbar from "./Navbar/Navbar";
 
 const items = [
   {
@@ -39,11 +40,14 @@ const BaseLayout = ({ children }: PropsWithChildren): React.ReactElement => {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="bg-[var(--color-primary-200)] dark:bg-[var(--color-primary-900)]">
-        <SidebarProvider defaultOpen={false} open={isSidebarHovered}>
-          <SidebarTrigger />
+      <div className="bg-[var(--color-error-50)] dark:bg-gray-950">
+        <SidebarProvider className="flex gap-3" defaultOpen={false} open={isSidebarHovered}>
           <SideNav items={items} setIsSidebarHovered={setIsSidebarHovered} />
-          <div className="w-full m-2 ml-[-20px] bg-background rounded-md p-2">
+          
+            
+          <div className="flex flex-col gap-2 w-full p-2">
+
+            <Navbar />
             {children}
           </div>
         </SidebarProvider>

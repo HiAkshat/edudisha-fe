@@ -1,10 +1,8 @@
 import ExampleTable from "@/components/atoms/table/example-data";
-import ThemeToggle from "@/components/atoms/ThemeToggle";
 
 const Attendance = () => {
   return (
-    <div>
-      <ThemeToggle/>
+    <div className="w-full bg-background rounded-md p-3 apply-shadow">
       <ExampleTable />
     </div>
   );
