@@ -18,6 +18,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@radix-ui/react-collapsible";
+import { ChevronDown } from "lucide-react";
 export default function SideNav({
   items,
   setIsSidebarHovered,
@@ -56,7 +57,10 @@ export default function SideNav({
                                 appliedTheme === "dark" ? "white" : "black"
                               }
                             />
-                            <span>{item.title}</span>
+                            <div className="flex justify-between w-full">
+                              <span>{item.title}</span>
+                              <ChevronDown className={`ml-2 h-4 w-4`} />
+                            </div>
                           </a>
                         </SidebarMenuButton>
                       </CollapsibleTrigger>

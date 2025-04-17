@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
+  VisibilityState,
 } from "@tanstack/react-table";
 
 // Components
@@ -16,12 +17,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Types
 import { DataTableProps, SortState, SortDirection } from "./types";
 
 // Icons
-import { ArrowUpDown, ArrowUp } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ChevronDown } from "lucide-react";
 
 // React
 import React from "react";
@@ -36,6 +43,12 @@ export default function DataTable<TData, TValue>({
   sortState,
   onSortChange,
 }: DataTableProps<TData, TValue>) {
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+
+  const [internalSortState, setInternalSortState] =
+    React.useState<SortState>(sortState);
+
   const table = useReactTable({
     data,
     columns,
@@ -48,12 +61,11 @@ export default function DataTable<TData, TValue>({
         pageIndex,
         pageSize,
       },
+      columnVisibility,
     },
     onPaginationChange,
+    onColumnVisibilityChange: setColumnVisibility,
   });
-
-  const [internalSortState, setInternalSortState] =
-    React.useState<SortState>(sortState);
 
   const handleSortClick = (columnId: string) => {
     let newDirection: SortDirection = "asc";
@@ -75,7 +87,38 @@ export default function DataTable<TData, TValue>({
   };
 
   return (
-    <div className="w-full h-min border rounded-md">
+    <div className="w-full h-min border rounded-md p-2">
+      <div className="flex flex-end">
+      <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns
+              <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter(
+                (column) => column.getCanHide()
+              )
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -138,7 +181,7 @@ export default function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-end gap-2 py-4">
+      <div className="flex items-center justify-end gap-2">
         <Button
           variant="outline"
           size="sm"
